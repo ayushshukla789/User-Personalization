@@ -16,19 +16,19 @@
 		<ul class="space-y-2">
 			<li>
 				<button
-					class="block w-full rounded-md p-4 text-left font-medium text-slate-600 hover:bg-indigo-50 {selectedView ===
+					class="block w-full rounded-md p-4 text-left font-medium  hover:bg-indigo-50 {selectedView ===
 					'new'
-						? 'bg-white text-indigo-600'
-						: ''}"
+						? 'bg-indigo-50 text-indigo-600'
+						: 'text-slate-600  bg-white'}"
 					onclick={() => navigateTo('new')}>Create New Ad</button
 				>
 			</li>
 			<li>
 				<button
-					class="block w-full rounded-md p-4 text-left font-medium text-slate-600 hover:bg-indigo-50 {selectedView ===
+					class="block w-full rounded-md p-4 text-left font-medium  hover:bg-indigo-50  {selectedView ===
 					'list'
-						? 'bg-white text-indigo-600'
-						: ''}"
+						? 'bg-indigo-50 text-indigo-600'
+						: 'text-slate-600  bg-white'}"
 					onclick={() => navigateTo('list')}>View Previous Ads</button
 				>
 			</li>

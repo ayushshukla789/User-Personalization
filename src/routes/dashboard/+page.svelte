@@ -6,7 +6,7 @@
 	import AdForm from '$lib/components/AdForm.svelte';
 	import AdList from '$lib/components/AdList.svelte';
 
-	let currentView: 'new' | 'list' = 'list';
+	let currentView: 'new' | 'list' = 'new';
 	let showSidebar: boolean = false;
 
 	const handleNavigate = (tab: 'new' | 'list') => {
@@ -38,10 +38,10 @@
 <div class="container">
 	<div class="flex-1">
 		<Header on:toggleSidebar={toggleSidebar} />
-		<main class="mt-20 flex flex-col gap-6 rounded-md bg-white md:flex-row">
+		<main class="mt-32 flex flex-col gap-6 rounded-md bg-white md:flex-row">
 			<Sidebar
 				class={showSidebar
-					? 'absolute top-14 left-2 block w-11/12 '
+					? 'absolute top-14 left-2 block w-11/12 sm:top-20'
 					: 'hidden h-fit w-full md:block'}
 				navigate={handleNavigate}
 				selectedView={currentView}
