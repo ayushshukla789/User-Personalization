@@ -94,33 +94,153 @@
 		}
 	};
 
-	interface GenericNamesByCategory {
-		[key: string]: string[];
-	}
-
-	const genericNamesByCategory: GenericNamesByCategory = {
-		"8": ["Smartphone", "Feature Phone", "Basic Phone"], // Mobiles
-		"10": ["Sneakers", "Flats", "Heels", "Sandals", "Sports Shoes", "Casual Shoes"], // Footwear
-		"28": ["Analog Watch", "Digital Watch", "Smart Watch"], // Watches
-		"36": ["Face Cream", "Lipstick", "Eye Shadow", "Foundation", "Nail Polish"], // Beauty
-		"55": ["Gaming Laptop", "Business Laptop", "Student Laptop"], // Computers
-		"58": ["Wireless Earphones", "Wired Earphones", "Over-ear Headphones", "TWS"], // Audio
-		"71": ["Air Conditioner", "Refrigerator", "Washing Machine", "Water Purifier"], // Home & Kitchen
-		"277": ["Fiction Book", "Mystery Book", "Romance Novel", "Fantasy Book"] // Books
-	};
-
-	const getGenericNames = (l1Id: string) => {
-		return genericNamesByCategory[l1Id] || [];
-	};
-
-	const genericSuggestions = [
-		"Smartphone", "Laptop", "Watch", "Headphones", "Earphones",
-		"Shoes", "Sandals", "Sneakers", "Heels", "Flats",
-		"Air Conditioner", "Refrigerator", "Washing Machine",
-		"Book", "Novel", "Lipstick", "Foundation", "Face Cream"
+	const validGenericNames = [
+		"mobile", "laptop", "headphone", "speaker", "charger", "power bank", "smartwatch", "earbud", "tablet", "television",
+		"camera", "printer", "keyboard", "mouse", "monitor", "router", "webcam", "microphone", "usb drive", "hard drive",
+		"ssd", "gaming console", "gaming accessory", "drone", "smart home device", "smart light", "smart plug", "doorbell",
+		"security camera", "home theatre", "projector", "blender", "mixer grinder", "pressure cooker", "induction cooktop",
+		"air fryer", "microwave", "refrigerator", "washing machine", "dishwasher", "vacuum cleaner", "iron", "water purifier",
+		"geyser", "fan", "air cooler", "heater", "coffee maker", "toaster", "electric kettle", "juicer", "food processor",
+		"cookware set", "frying pan", "saucepan", "cooker", "kitchen utensil", "dinner set", "glassware", "storage container",
+		"lunch box", "water bottle", "thermos", "cutting board", "knife set", "peeler", "grater", "apparel", "t-shirt",
+		"shirt", "jeans", "trouser", "dress", "saree", "kurti", "jacket", "sweater", "hoodie", "shorts", "skirt", "top",
+		"sportswear", "swimwear", "underwear", "socks", "footwear", "shoes", "sneaker", "sandal", "slipper", "heels",
+		"boot", "watch", "handbag", "backpack", "wallet", "belt", "sunglasses", "jewelry set", "earrings", "necklace",
+		"bracelet", "ring", "perfume", "deodorant", "shampoo", "conditioner", "soap", "body wash", "lotion", "moisturizer",
+		"face wash", "serum", "sunscreen", "makeup", "lipstick", "foundation", "mascara", "eyeliner", "nail polish",
+		"hair dryer", "straightener", "curler", "trimmer", "shaver", "toothbrush", "toothpaste", "mouthwash", "hand sanitizer",
+		"mask", "vitamins", "supplements", "protein powder", "ayurvedic product", "medical device", "thermometer", "bp monitor",
+		"pulse oximeter", "first aid kit", "yoga mat", "dumbbell", "resistance band", "treadmill", "exercise bike",
+		"fitness tracker", "sports shoe", "cricket bat", "football", "basketball", "badminton racket", "tennis racket",
+		"sleeping bag", "tent", "camping gear", "gardening tool", "plant seed", "pot", "fertilizer", "pest control",
+		"home decor", "curtain", "bedsheet", "cushion cover", "rug", "carpet", "photo frame", "wall art", "vase", "candle",
+		"decorative lamp", "figurine", "artificial plant", "furniture", "sofa", "bed", "mattress", "dining table", "chair",
+		"wardrobe", "bookshelf", "study table", "tv unit", "shoe rack", "book", "fiction book", "non-fiction book",
+		"children's book", "textbook", "ebook reader", "dvd", "blu-ray", "cd", "vinyl record", "video game", "toy", "doll",
+		"action figure", "building block", "board game", "puzzle", "remote control toy", "stuffed animal", "baby product",
+		"diaper", "baby wipes", "baby food", "baby lotion", "baby shampoo", "baby soap", "pram", "stroller", "car seat",
+		"crib", "baby carrier", "pet food", "pet toy", "pet grooming tool", "pet bed", "cat litter", "dog collar",
+		"dog leash", "groceries", "staples", "snack", "beverage", "breakfast cereal", "cooking oil", "spices", "flour",
+		"rice", "lentils", "sugar", "salt", "tea", "coffee", "chocolate", "biscuit", "chips", "noodle", "sauce", "jam",
+		"honey", "dry fruit", "nut", "canned food", "frozen food", "cleaning supply", "detergent", "floor cleaner",
+		"dishwashing liquid", "toilet cleaner", "glass cleaner", "brush", "mop", "dustbin", "tissue paper", "toilet paper",
+		"paper towel", "stationery", "pen", "pencil", "notebook", "paper", "eraser", "sharpener", "scale", "calculator",
+		"bag", "school bag", "office supply", "file folder", "stapler", "punch machine", "glue", "tape", "art supply",
+		"paint", "brush set", "canvas", "drawing book", "craft kit", "musical instrument", "guitar", "drum set", "ukulele",
+		"violin", "home improvement", "drill machine", "tool kit", "screwdriver", "hammer", "wrench", "adhesive",
+		"lighting fixture", "bulb", "battery", "extension cord", "power strip", "vehicle accessory", "car charger",
+		"car air freshener", "car cleaner", "bike helmet", "bike accessory", "luggage", "travel bag", "suitcase",
+		"duffel bag", "travel pillow", "travel adapter", "gift set", "flower", "chocolate box", "greeting card", "voucher",
+		"subscription", "software", "antivirus", "operating system", "utility software", "education course", "online class",
+		"web hosting", "domain name", "digital product", "ebook", "music download", "movie download", "game download",
+		"gift card", "furniture cover", "car cover", "bike cover", "umbrella", "raincoat", "sleeping mask", "earplugs",
+		"travel neck pillow", "electric blanket", "heating pad", "massager", "humidifier", "dehumidifier", "air purifier",
+		"air conditioner", "water dispenser", "cooler", "vacuum flask", "storage box", "basket", "hanger", "clothes rack",
+		"laundry basket", "drying rack", "mirror", "clock", "photo album", "journal", "diary", "calendar", "planner",
+		"desk organizer", "pen stand", "file cabinet", "shredder", "projector screen", "webcam cover", "screen protector",
+		"laptop stand", "mobile stand", "ring light", "tripod", "microphone stand", "keyboard cover", "mouse pad",
+		"webcam light", "usb hub", "cable organizer", "cable protector", "power adapter", "travel mug", "tumbler",
+		"coaster", "tablecloth", "napkin", "placemat", "cutlery set", "chopsticks", "straw", "bottle opener", "can opener",
+		"kitchen scale", "timer", "oven mitt", "apron", "dish towel", "cleaning cloth", "sponge", "scrubber", "broom",
+		"dustpan", "wiper", "gloves", "disinfectant", "air freshener", "insect repellent", "candle holder",
+		"incense stick", "aroma diffuser", "essential oil", "massage oil", "bath bomb", "bath salt", "loofah", "hair brush",
+		"comb", "razor", "shaving cream", "aftershave", "hand cream", "foot cream", "lip balm", "body butter", "face mask",
+		"hair mask", "sun hat", "scarf", "belt buckle", "tie", "cufflinks", "brooch", "keychain", "swimming goggles",
+		"swim cap", "gym bag", "sports water bottle", "protein bar", "energy drink", "health supplement",
+		"protein supplement", "fish oil", "multivitamin", "calcium supplement", "iron supplement", "zinc supplement",
+		"vitamin c", "vitamin d", "b-complex", "probiotic", "prebiotic", "digestive enzyme", "sleep aid", "stress relief",
+		"pain relief", "cold medicine", "fever medicine", "allergy medicine", "antiseptic", "bandage", "gauze",
+		"cotton ball", "ointment", "spray", "hand wash", "sanitizer refill", "tissue box", "face towel", "bath towel",
+		"hand towel", "door mat", "shoe mat", "car mat", "boot mat", "dash cam", "car vacuum cleaner", "tire inflator",
+		"jump starter", "car perfume", "car polish", "car wax", "bike lock", "bike pump", "bike light", "cycle bell",
+		"cycle stand"
 	];
 
-	let selectedGenericName = '';
+	const validBrandNames = [
+		"samsung", "apple", "oneplus", "xiaomi", "redmi", "mi", "iqoo", "realme", "vivo", "oppo",
+		"motorola", "nokia", "lava", "infinix", "google", "nothing", "sony", "lg", "panasonic", "philips",
+		"bajaj", "usha", "havells", "v-guard", "orient", "crompton", "bosch", "ifb", "whirlpool", "haier",
+		"godrej", "kent", "eureka forbes", "prestige", "pigeon", "milton", "cello", "butterfly", "lifelong", "bajaj vacco",
+		"fire-boltt", "noise", "boat", "portronics", "ambrane", "zebronics", "jbl", "anker", "soundcore", "skullcandy",
+		"logitech", "hp", "dell", "asus", "lenovo", "acer", "msi", "apple", "amazon basics", "sony playstation",
+		"wrogn", "puma", "adidas", "nike", "reebok", "sparx", "red tape", "bata", "campus", "asian",
+		"liberty", "crocs", "woodland", "metro", "fila", "skechers", "hrx", "levis", "peter england", "allen solly",
+		"van heusen", "roadster", "flying machine", "us polo", "tommy hilfiger", "dennis lingo", "bewakoof", "zara", "h&m", "max",
+		"shining diva", "yellow chimes", "jpearls", "sukkhi", "aristocrat", "wildcraft", "american tourister", "skybags", "safari", "fastrack",
+		"timex", "casio", "sonata", "titan", "noise", "fire-boltt", "apple watch", "boat watch", "gshock", "fitbit",
+		"boldfit", "mivi", "realme buds", "anker", "intex", "micromax", "karbonn", "blaupunkt", "vu", "tcl"
+	];
+
+	let filteredGenericNames: string[] = [...validGenericNames].slice(0, 10);
+	let filteredBrandNames: string[] = [...validBrandNames].slice(0, 10);
+	let showGenericSuggestions = false;
+	let showBrandSuggestions = false;
+	let genericNameInput: HTMLInputElement;
+	let brandNameInput: HTMLInputElement;
+
+	const handleGenericNameInput = (event: Event) => {
+		const input = (event.target as HTMLInputElement).value.toLowerCase();
+		if (input.length === 0) {
+			filteredGenericNames = validGenericNames.slice(0, 10);
+		} else {
+			filteredGenericNames = validGenericNames.filter(name => 
+				name.toLowerCase().includes(input)
+			).slice(0, 10);
+		}
+		showGenericSuggestions = true;
+	};
+
+	const handleBrandNameInput = (event: Event) => {
+		const input = (event.target as HTMLInputElement).value.toLowerCase();
+		if (input.length === 0) {
+			filteredBrandNames = validBrandNames.slice(0, 10);
+		} else {
+			filteredBrandNames = validBrandNames.filter(name => 
+				name.toLowerCase().includes(input)
+			).slice(0, 10);
+		}
+		showBrandSuggestions = true;
+	};
+
+	const handleGenericNameFocus = () => {
+		filteredGenericNames = validGenericNames.slice(0, 10);
+		showGenericSuggestions = true;
+	};
+
+	const handleBrandNameFocus = () => {
+		filteredBrandNames = validBrandNames.slice(0, 10);
+		showBrandSuggestions = true;
+	};
+
+	const handleGenericNameBlur = () => {
+		setTimeout(() => {
+			showGenericSuggestions = false;
+		}, 200);
+	};
+
+	const handleBrandNameBlur = () => {
+		setTimeout(() => {
+			showBrandSuggestions = false;
+		}, 200);
+	};
+
+	const selectGenericName = (suggestion: string) => {
+		selectedGenericName = suggestion;
+		showGenericSuggestions = false;
+		if (genericNameInput) {
+			genericNameInput.value = suggestion;
+			genericNameInput.focus();
+		}
+	};
+
+	const selectBrandName = (suggestion: string) => {
+		brandName = suggestion;
+		showBrandSuggestions = false;
+		if (brandNameInput) {
+			brandNameInput.value = suggestion;
+			brandNameInput.focus();
+		}
+	};
 
 	const genderOptions = ['Male', 'Women', 'Unisex'];
 	const cityTierOptions = ['Tier 1', 'Tier 2', 'Tier 3', 'No Tier'];
@@ -184,15 +304,29 @@
 			return;
 		}
 
+		// Validate generic name is in the allowed list
+		if (!validGenericNames.includes(selectedGenericName.toLowerCase())) {
+			error = 'Please select a valid generic name from the suggestions.';
+			loading = false;
+			return;
+		}
+
+		// Validate brand name is in the allowed list
+		if (!validBrandNames.includes(brandName.toLowerCase())) {
+			error = 'Please select a valid brand name from the suggestions.';
+			loading = false;
+			return;
+		}
+
 		try {
 			const params = new URLSearchParams();
 			params.append('cityTier', selectedCityTier === 'No Tier' ? '' : selectedCityTier);
 			params.append('gender', selectedGender);
-			params.append('brand', brandName);
+			params.append('brand', brandName.toLowerCase());
 			params.append('level1Cat', selectedL1Category);
 			params.append('level2Cat', hasL2Categories(selectedL1Category) ? selectedL2Category : '-1');
 			params.append('level3Cat', hasL3Categories(selectedL2Category) ? selectedL3Category : '-1');
-			params.append('genericName', selectedGenericName);
+			params.append('genericName', selectedGenericName.toLowerCase());
 
 			const {status, data} = await getUsersPersonas(params);
 
@@ -238,27 +372,7 @@
 	};
 
 	// Add these to the script section at the top
-	let showGenericSuggestions = false;
-	let genericNameInput: HTMLInputElement;
-
-	const handleGenericNameFocus = () => {
-		showGenericSuggestions = true;
-	};
-
-	const handleGenericNameBlur = () => {
-		// Small delay to allow click event on options to fire
-		setTimeout(() => {
-			showGenericSuggestions = false;
-		}, 200);
-	};
-
-	const selectGenericName = (suggestion: string) => {
-		selectedGenericName = suggestion;
-		showGenericSuggestions = false;
-		if (genericNameInput) {
-			genericNameInput.focus();
-		}
-	};
+	let selectedGenericName = '';
 </script>
 
 <div class="w-full">
@@ -339,35 +453,56 @@
 					bind:value={selectedGenericName}
 					onfocus={handleGenericNameFocus}
 					onblur={handleGenericNameBlur}
+					oninput={handleGenericNameInput}
 					placeholder="Type or select generic name"
 					class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
 					required
 				/>
-				{#if showGenericSuggestions}
-					<div class="absolute z-10 w-full mt-1">
-						<select
-							size={Math.min(5, genericSuggestions.length)}
-							class="w-full rounded-md border-slate-300 shadow-lg focus:border-indigo-500 focus:ring-indigo-500 bg-white"
-							onchange={(e) => selectGenericName((e.target as HTMLSelectElement).value)}
-						>
-							{#each getGenericNames(selectedL1Category).length > 0 ? getGenericNames(selectedL1Category) : genericSuggestions as suggestion}
-								<option value={suggestion}>{suggestion}</option>
+				{#if showGenericSuggestions && filteredGenericNames.length > 0}
+					<div class="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-auto">
+						<ul class="py-1">
+							{#each filteredGenericNames as suggestion}
+								<li 
+									class="px-4 py-2 hover:bg-indigo-50 cursor-pointer text-sm"
+									onmousedown={() => selectGenericName(suggestion)}
+								>
+									{suggestion}
+								</li>
 							{/each}
-						</select>
+						</ul>
 					</div>
 				{/if}
 			</div>
 
 			<!-- Brand Name -->
-			<div class="flex-1">
+			<div class="flex-1 relative">
 				<label for="brandName" class="block text-sm font-medium text-slate-600">Brand Name</label>
 				<input
 					type="text"
 					id="brandName"
+					bind:this={brandNameInput}
 					bind:value={brandName}
+					onfocus={handleBrandNameFocus}
+					onblur={handleBrandNameBlur}
+					oninput={handleBrandNameInput}
+					placeholder="Type or select brand name"
 					class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
 					required
 				/>
+				{#if showBrandSuggestions && filteredBrandNames.length > 0}
+					<div class="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-auto">
+						<ul class="py-1">
+							{#each filteredBrandNames as suggestion}
+								<li 
+									class="px-4 py-2 hover:bg-indigo-50 cursor-pointer text-sm"
+									onmousedown={() => selectBrandName(suggestion)}
+								>
+									{suggestion}
+								</li>
+							{/each}
+						</ul>
+					</div>
+				{/if}
 			</div>
 		</div>
 
