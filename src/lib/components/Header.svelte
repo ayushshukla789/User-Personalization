@@ -2,15 +2,21 @@
 	import logo from '$lib/images/logoFull.svg';
 	import searchIcon from '$lib/images/search.svg';
 	import personIcon from '$lib/images/person.svg';
-	import { authStore } from '$lib/stores/auth';
+	import { authStore, logout } from '$lib/stores/auth';
+	import { goto } from '$app/navigation';
+
+	const handleLogout = () => {
+		logout();
+		goto('/');
+	};
 </script>
 
 <header class="fixed top-0 right-0 left-0 z-50 border-b border-slate-200 bg-white">
-	<div class="mx-auto max-w-[1440px] px-6 lg:px-8">
-		<div class="flex h-16 items-center justify-between border-b border-slate-200">
+	<div class="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8">
+		<div class="flex h-12 items-center justify-between sm:h-16">
 			<div class="flex items-center">
 				<a href="/dashboard" class="flex items-center"
-					><img src={logo} alt="Logo" class="h-8 w-auto" /></a
+					><img src={logo} alt="Logo" class="h-6 w-auto sm:h-8" /></a
 				>
 			</div>
 			<div class="mx-8 hidden max-w-md flex-1 md:flex">
@@ -25,9 +31,9 @@
 					/>
 				</div>
 			</div>
-			<div class="flex items-center space-x-4">
-				<div class="user-menu-container relative">
-					<button class="flex items-center space-x-3 rounded-lg py-1.5 pr-3 pl-1 hover:bg-slate-50"
+			<div class="flex items-center">
+				<div class="relative flex gap-2 sm:gap-4">
+					<button class="flex items-center rounded-lg py-1.5 hover:bg-slate-50 md:gap-2"
 						><span class="relative flex shrink-0"
 							><div class="flex h-8 w-8 items-center justify-center rounded-full bg-indigo-100">
 								<img src={personIcon} alt="person Icon" class="h-4 w-4 text-indigo-600" />
@@ -40,6 +46,12 @@
 								class="text-xs text-gray-500 dark:text-gray-400">Administrator</span
 							></span
 						></button
+					>
+					<button
+						class="my-auto flex w-full justify-center rounded-md border border-transparent bg-orange-500
+							px-4 py-1.5 text-sm font-medium text-white shadow-sm hover:bg-orange-600 focus:ring-2
+							focus:outline-none sm:py-2.5"
+						on:click={handleLogout}>Logout</button
 					>
 				</div>
 			</div>
