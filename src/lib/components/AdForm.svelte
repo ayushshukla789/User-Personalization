@@ -376,7 +376,7 @@
 </script>
 
 <div class="w-full">
-	<div class="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
+	<div class="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-4">
 		<h2 class="flex-shrink-0 text-2xl font-bold text-slate-800">Add New Product</h2>
 
 		<button
@@ -420,7 +420,7 @@
 							class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
 							required
 						/>
-						{#if index > 0}
+						{#if index !== imageUrls.length - 1}
 							<button
 								type="button"
 								onclick={() => removeImageUrl(index)}
@@ -462,11 +462,14 @@
 					<div class="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-auto">
 						<ul class="py-1">
 							{#each filteredGenericNames as suggestion}
-								<li 
-									class="px-4 py-2 hover:bg-indigo-50 cursor-pointer text-sm"
-									onmousedown={() => selectGenericName(suggestion)}
-								>
-									{suggestion}
+								<li>
+									<button 
+										type="button"
+										class="w-full text-left px-4 py-2 hover:bg-indigo-50 cursor-pointer text-sm"
+										onclick={() => selectGenericName(suggestion)}
+									>
+										{suggestion}
+									</button>
 								</li>
 							{/each}
 						</ul>
@@ -493,11 +496,14 @@
 					<div class="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-auto">
 						<ul class="py-1">
 							{#each filteredBrandNames as suggestion}
-								<li 
-									class="px-4 py-2 hover:bg-indigo-50 cursor-pointer text-sm"
-									onmousedown={() => selectBrandName(suggestion)}
-								>
-									{suggestion}
+								<li>
+									<button 
+										type="button"
+										class="w-full text-left px-4 py-2 hover:bg-indigo-50 cursor-pointer text-sm"
+										onclick={() => selectBrandName(suggestion)}
+									>
+										{suggestion}
+									</button>
 								</li>
 							{/each}
 						</ul>
