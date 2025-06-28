@@ -22,7 +22,7 @@
 		error = null;
 		try {
 			// Simulate API call to fetch ads
-			await new Promise((resolve) => setTimeout(resolve, 1500));
+			await new Promise((resolve) => setTimeout(resolve, 1000));
 
 			// For demonstration, return some dummy data
 			ads = [
@@ -49,7 +49,7 @@
 	};
 </script>
 
-<div class="p-4">
+<div class="w-full">
 	<h2 class="mb-4 text-2xl font-bold text-gray-800">Previous Ads</h2>
 
 	{#if loading}

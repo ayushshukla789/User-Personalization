@@ -37,7 +37,7 @@
 	};
 </script>
 
-<div class="w-full bg-red-500 p-4">
+<div class="w-full">
 	<h2 class="mb-4 text-2xl font-bold text-gray-800">Create New Ad</h2>
 
 	{#if success}
