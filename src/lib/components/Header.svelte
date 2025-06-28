@@ -25,9 +25,9 @@
 	<div class="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8">
 		<div class="flex h-12 items-center justify-between sm:h-16">
 			<div class="flex items-center gap-2">
-				<button class="md:hidden" on:click={handleToggleSidebar} aria-label="Toggle sidebar">
+				<!-- <button class="md:hidden" on:click={handleToggleSidebar} aria-label="Toggle sidebar">
 					<img src={hamburgerIcon} alt="hamburger icon" class="h-6 w-6" />
-				</button>
+				</button> -->
 				<a href="/dashboard" class="flex items-center"
 					><img src={logo} alt="Logo" class="h-6 w-auto sm:h-8" /></a
 				>

@@ -11,7 +11,7 @@
 <div class="container">
 	<div class="flex-1">
 		<Header on:toggleSidebar={handleToggleSidebar} />
-		<main class="mt-32 flex flex-col gap-6 rounded-md bg-white md:flex-row">
+		<main class="mt-20 sm:mt-32 flex flex-col gap-6 rounded-md bg-white md:flex-row">
 			{@render children()}
 		</main>
 	</div>

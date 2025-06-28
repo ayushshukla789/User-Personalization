@@ -36,13 +36,13 @@
 	});
 </script>
 
-<Sidebar
+<!-- <Sidebar
 	class={showSidebar
 		? 'absolute top-14 left-2 block w-11/12 sm:top-20'
 		: 'hidden h-fit w-full md:block'}
 	navigate={handleNavigate}
 	selectedView={currentView}
-/>
+/> -->
 {#if currentView === 'new'}
 	<AdForm />
 {:else if currentView === 'list'}
