@@ -10,7 +10,7 @@ interface AuthState {
 
 const COOKIE_NAME = 'auth_state';
 const COOKIE_EXPIRES = 1;
-const COOKIE_VERSION = 2; 
+const COOKIE_VERSION = 2;
 
 // Check cookies for existing auth state
 const getInitialState = (): AuthState => {
