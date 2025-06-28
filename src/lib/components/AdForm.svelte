@@ -123,7 +123,7 @@
 	let selectedGenericName = '';
 
 	const genderOptions = ['Male', 'Women', 'Unisex'];
-	const cityTierOptions = ['Tier 1', 'Tier 2', 'Tier 3'];
+	const cityTierOptions = ['Tier 1', 'Tier 2', 'Tier 3', 'No Tier'];
 
 	let loading: boolean = false;
 	let error: string | null = null;
@@ -186,7 +186,7 @@
 
 		try {
 			const params = new URLSearchParams();
-			params.append('cityTier', selectedCityTier);
+			params.append('cityTier', selectedCityTier === 'No Tier' ? '' : selectedCityTier);
 			params.append('gender', selectedGender);
 			params.append('brand', brandName);
 			params.append('level1Cat', selectedL1Category);
@@ -221,17 +221,18 @@
 			}
 		} catch {
 			error = 'Failed to create product.';
-		} finally {
-			productName = '';
-			imageUrls = [''];
-			selectedL1Category = '';
-			selectedL2Category = '';
-			selectedL3Category = '';
-			selectedGenericName = '';
-			selectedGender = '';
-			selectedCityTier = '';
-			brandName = '';
-		}
+		} 
+		// finally {
+		// 	productName = '';
+		// 	imageUrls = [''];
+		// 	selectedL1Category = '';
+		// 	selectedL2Category = '';
+		// 	selectedL3Category = '';
+		// 	selectedGenericName = '';
+		// 	selectedGender = '';
+		// 	selectedCityTier = '';
+		// 	brandName = '';
+		// }
 
 		loading = false;
 	};
@@ -262,10 +263,10 @@
 
 <div class="w-full">
 	<div class="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
-		<h2 class="flex-shrink-0 text-2xl font-bold text-slate-800">Create New Product</h2>
+		<h2 class="flex-shrink-0 text-2xl font-bold text-slate-800">Add New Product</h2>
 
 		<button
-			class="order-last mb-8 md:mb-0 md:order-none hidden md:flex h-full w-full md:w-fit items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 font-medium text-white shadow-sm hover:bg-indigo-700 focus:ring-0 focus:outline-none disabled:opacity-50"
+			class="order-last mb-8 md:mb-0 md:order-none hidden md:flex h-full w-full md:w-fit items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 font-medium text-white shadow-sm hover:bg-indigo-700 focus:ring-0 focus:outline-none disabled:opacity-50 min-w-44"
 			disabled={loading}
 			onclick={handleSubmit}
 		>
@@ -274,10 +275,10 @@
 	</div>
 
 	{#if success}
-		<div class="mb-4 rounded-md bg-green-100 p-3 text-green-700">{success}</div>
+		<div class="my-4 rounded-md bg-green-100 p-3 text-green-700">{success}</div>
 	{/if}
 	{#if error}
-		<div class="mb-4 rounded-md bg-red-100 p-3 text-red-700">{error}</div>
+		<div class="my-4 rounded-md bg-red-100 p-3 text-red-700">{error}</div>
 	{/if}
 
 	<div class="space-y-4 mb-10">
