@@ -10,6 +10,7 @@ interface AuthState {
 
 const COOKIE_NAME = 'auth_state';
 const COOKIE_EXPIRES = 1;
+const COOKIE_VERSION = 2; 
 
 // Check cookies for existing auth state
 const getInitialState = (): AuthState => {
@@ -17,7 +18,13 @@ const getInitialState = (): AuthState => {
 		const savedAuth = Cookies.get(COOKIE_NAME);
 		if (savedAuth) {
 			try {
-				return JSON.parse(savedAuth);
+				const parsedAuth = JSON.parse(savedAuth);
+				if (parsedAuth.version === COOKIE_VERSION) {
+					return parsedAuth;
+				} else {
+					// Invalidate cookie if version mismatch
+					Cookies.remove(COOKIE_NAME);
+				}
 			} catch {
 				// If cookie is invalid, remove it
 				Cookies.remove(COOKIE_NAME);
@@ -39,7 +46,7 @@ const createAuthStore = () => {
 		set: (value: AuthState) => {
 			if (typeof window !== 'undefined') {
 				if (value.isAuthenticated) {
-					Cookies.set(COOKIE_NAME, JSON.stringify(value), {
+					Cookies.set(COOKIE_NAME, JSON.stringify({ ...value, version: COOKIE_VERSION }), {
 						expires: COOKIE_EXPIRES,
 						sameSite: 'strict',
 						secure: window.location.protocol === 'https:'
@@ -55,7 +62,7 @@ const createAuthStore = () => {
 				const newState = updater(state);
 				if (typeof window !== 'undefined') {
 					if (newState.isAuthenticated) {
-						Cookies.set(COOKIE_NAME, JSON.stringify(newState), {
+						Cookies.set(COOKIE_NAME, JSON.stringify({ ...newState, version: COOKIE_VERSION }), {
 							expires: COOKIE_EXPIRES,
 							sameSite: 'strict',
 							secure: window.location.protocol === 'https:'
@@ -78,7 +85,7 @@ export const login = async (username: string, password: string) => {
 	try {
 		// In a real application, this would be an API call
 		// For demo purposes, we'll use a simple check
-		if (username === 'admin' && password === 'admin123') {
+		if (username === 'admin' && password === 'hackathon123') {
 			authStore.update((state) => ({
 				...state,
 				isAuthenticated: true,

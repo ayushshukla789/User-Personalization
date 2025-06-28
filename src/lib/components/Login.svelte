@@ -7,13 +7,13 @@
 
 	let username = '';
 	let password = '';
-	let loading = false;
+
 	let error: string | null = null;
 
 	onMount(() => {
 		// Redirect to home if already authenticated
 		if ($authStore.isAuthenticated) {
-			goto('/');
+			goto('/dashboard');
 		}
 	});
 
@@ -25,7 +25,7 @@
 
 		const success = await login(username, password);
 		if (success) {
-			goto('/');
+			goto('/dashboard');
 		} else {
 			error = 'Invalid credentials';
 		}
