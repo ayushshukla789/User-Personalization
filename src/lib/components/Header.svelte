@@ -1,20 +1,33 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
+	import { authStore, logout } from '$lib/stores/auth';
+
 	import logo from '$lib/images/logoFull.svg';
 	import searchIcon from '$lib/images/search.svg';
 	import personIcon from '$lib/images/person.svg';
-	import { authStore, logout } from '$lib/stores/auth';
-	import { goto } from '$app/navigation';
+	import hamburgerIcon from '$lib/images/hamburger.svg';
+
+	import { createEventDispatcher } from 'svelte';
+
+	const dispatch = createEventDispatcher();
 
 	const handleLogout = () => {
 		logout();
 		goto('/');
+	};
+
+	const handleToggleSidebar = () => {
+		dispatch('toggleSidebar');
 	};
 </script>
 
 <header class="fixed top-0 right-0 left-0 z-50 border-b border-slate-200 bg-white">
 	<div class="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8">
 		<div class="flex h-12 items-center justify-between sm:h-16">
-			<div class="flex items-center">
+			<div class="flex items-center gap-2">
+				<button class="md:hidden" on:click={handleToggleSidebar} aria-label="Toggle sidebar">
+					<img src={hamburgerIcon} alt="hamburger icon" class="h-6 w-6" />
+				</button>
 				<a href="/dashboard" class="flex items-center"
 					><img src={logo} alt="Logo" class="h-6 w-auto sm:h-8" /></a
 				>
@@ -49,8 +62,8 @@
 					>
 					<button
 						class="my-auto flex w-full justify-center rounded-md border border-transparent bg-orange-500
-							px-4 py-1.5 text-sm font-medium text-white shadow-sm hover:bg-orange-600 focus:ring-2
-							focus:outline-none sm:py-2.5"
+							px-2 py-1.5 text-sm font-medium text-white shadow-sm hover:bg-orange-600 focus:ring-2 focus:outline-none
+							sm:px-4 sm:py-2.5"
 						on:click={handleLogout}>Logout</button
 					>
 				</div>
