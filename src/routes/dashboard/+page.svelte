@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
 
-	import Header from '$lib/components/Header.svelte';
 	import Sidebar from '$lib/components/Sidebar.svelte';
 	import AdForm from '$lib/components/AdForm.svelte';
 	import AdList from '$lib/components/AdList.svelte';
@@ -28,29 +27,24 @@
 
 	onMount(() => {
 		window.addEventListener('scroll', handleScroll);
+		window.addEventListener('toggleSidebar', toggleSidebar);
 	});
 
 	onDestroy(() => {
 		window.removeEventListener('scroll', handleScroll);
+		window.removeEventListener('toggleSidebar', toggleSidebar);
 	});
 </script>
 
-<div class="container">
-	<div class="flex-1">
-		<Header on:toggleSidebar={toggleSidebar} />
-		<main class="mt-32 flex flex-col gap-6 rounded-md bg-white md:flex-row">
-			<Sidebar
-				class={showSidebar
-					? 'absolute top-14 left-2 block w-11/12 sm:top-20'
-					: 'hidden h-fit w-full md:block'}
-				navigate={handleNavigate}
-				selectedView={currentView}
-			/>
-			{#if currentView === 'new'}
-				<AdForm />
-			{:else if currentView === 'list'}
-				<AdList />
-			{/if}
-		</main>
-	</div>
-</div>
+<Sidebar
+	class={showSidebar
+		? 'absolute top-14 left-2 block w-11/12 sm:top-20'
+		: 'hidden h-fit w-full md:block'}
+	navigate={handleNavigate}
+	selectedView={currentView}
+/>
+{#if currentView === 'new'}
+	<AdForm />
+{:else if currentView === 'list'}
+	<AdList />
+{/if}

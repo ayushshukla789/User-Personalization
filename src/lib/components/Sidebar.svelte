@@ -20,7 +20,7 @@
 					'new'
 						? 'bg-indigo-50 text-indigo-600'
 						: 'text-slate-600  bg-white'}"
-					onclick={() => navigateTo('new')}>Create New Ad</button
+					onclick={() => navigateTo('new')}>Add New Product</button
 				>
 			</li>
 			<li>
@@ -29,7 +29,7 @@
 					'list'
 						? 'bg-indigo-50 text-indigo-600'
 						: 'text-slate-600  bg-white'}"
-					onclick={() => navigateTo('list')}>View Previous Ads</button
+					onclick={() => navigateTo('list')}>View Previous </button
 				>
 			</li>
 		</ul>

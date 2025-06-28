@@ -50,14 +50,14 @@
 </script>
 
 <div class="w-full">
-	<h2 class="mb-4 text-2xl font-bold text-gray-800">Previous Ads</h2>
+	<h2 class="mb-4 text-2xl font-bold text-gray-800">Previous</h2>
 
 	{#if loading}
-		<p>Loading ads...</p>
+		<p>Loading ...</p>
 	{:else if error}
 		<div class="mb-4 rounded-md bg-red-100 p-3 text-red-700">{error}</div>
 	{:else if ads.length === 0}
-		<p>No ads found. Create a new ad to see it here.</p>
+		<p>No products found. Create a new product to see it here.</p>
 	{:else}
 		<div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
 			{#each ads as ad (ad.id)}
@@ -69,7 +69,7 @@
 						href={ad.targetUrl}
 						target="_blank"
 						rel="noopener noreferrer"
-						class="text-indigo-600 hover:underline">View Ad</a
+						class="text-indigo-600 hover:underline">View</a
 					>
 				</div>
 			{/each}

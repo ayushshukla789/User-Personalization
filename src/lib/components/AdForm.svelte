@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { getUsersPersonas } from "$lib/api";
+	import { goto } from '$app/navigation';
 
 	// Product details
 	let productName: string = '';
@@ -167,7 +168,6 @@
 	};
 
 	const handleSubmit = async () => {
-		window.alert('submit');
 		loading = true;
 		error = null;
 		success = null;
@@ -197,8 +197,27 @@
 			const {status, data} = await getUsersPersonas(params);
 
 			if(status === 1){
-				success = 'Product created successfully!';
-				console.log(data);
+				// Navigate to success page with submitted data and response
+				const submittedData = {
+					productName,
+					imageUrls,
+					genericName: selectedGenericName,
+					brandName,
+					categories: {
+						l1: categories.L1.find(c => c.id === selectedL1Category)?.name || '',
+						l2: getL2Categories(selectedL1Category).find(c => c.id === selectedL2Category)?.name || '',
+						l3: getL3Categories(selectedL2Category).find(c => c.id === selectedL3Category)?.name || ''
+					},
+					gender: selectedGender,
+					cityTier: selectedCityTier,
+					response: data
+				};
+				
+				goto('/dashboard/product', {
+					replaceState: true,
+					state: { submittedData }
+				});
+				return;
 			}
 		} catch {
 			error = 'Failed to create product.';
