@@ -5,19 +5,12 @@
 	import logo from '$lib/images/logoFull.svg';
 	import searchIcon from '$lib/images/search.svg';
 	import personIcon from '$lib/images/person.svg';
-	import hamburgerIcon from '$lib/images/hamburger.svg';
+	// import hamburgerIcon from '$lib/images/hamburger.svg';
 
-	import { createEventDispatcher } from 'svelte';
-
-	const dispatch = createEventDispatcher();
 
 	const handleLogout = () => {
 		logout();
 		goto('/');
-	};
-
-	const handleToggleSidebar = () => {
-		dispatch('toggleSidebar');
 	};
 </script>
 
