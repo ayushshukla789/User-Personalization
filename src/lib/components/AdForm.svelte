@@ -311,7 +311,7 @@
 			disabled={loading}
 			onclick={handleSubmit}
 		>
-			{loading ? 'Creating...' : 'Create Product'}
+			{loading ? 'Creating...' : 'Add Product'}
 		</button>
 	</div>
 
@@ -330,6 +330,8 @@
 				id="productName"
 				bind:value={productName}
 				class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+				autocomplete="off"
+				autocapitalize="off"
 				required
 			/>
 		</div>
@@ -345,6 +347,7 @@
 							bind:value={imageUrl}
 							placeholder="Image URL"
 							class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+							autocomplete="off"
 							required
 						/>
 						{#if index !== imageUrls.length - 1}
@@ -372,7 +375,9 @@
 		<div class="flex w-full flex-col gap-4 md:flex-row">
 			<!-- Generic Name -->
 			<div class="flex-1 relative">
-				<label for="genericName" class="block text-sm font-medium text-slate-600">Generic Name</label>
+				<label for="genericName" class="block text-sm font-medium text-slate-600">
+					Generic Name <span class="text-red-500">*</span>
+				</label>
 				<input
 					id="genericName"
 					bind:this={genericNameInput}
@@ -383,6 +388,8 @@
 					oninput={handleGenericNameInput}
 					placeholder="Type or select generic name"
 					class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+					autocomplete="off"
+					autocapitalize="off"
 					required
 				/>
 				{#if showGenericSuggestions && filteredGenericNames.length > 0}
@@ -406,7 +413,9 @@
 
 			<!-- Brand Name -->
 			<div class="flex-1 relative">
-				<label for="brandName" class="block text-sm font-medium text-slate-600">Brand Name</label>
+				<label for="brandName" class="block text-sm font-medium text-slate-600">
+					Brand Name <span class="text-red-500">*</span>
+				</label>
 				<input
 					type="text"
 					id="brandName"
@@ -417,6 +426,8 @@
 					oninput={handleBrandNameInput}
 					placeholder="Type or select brand name"
 					class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+					autocomplete="off"
+					autocapitalize="off"
 					required
 				/>
 				{#if showBrandSuggestions && filteredBrandNames.length > 0}
@@ -442,7 +453,9 @@
 		<!-- Categories -->
 		<div class="space-y-4 flex flex-col md:flex-row gap-4 w-full">
 			<div class="flex-1">
-				<label for="l1category" class="block text-sm font-medium text-slate-600">Category L1</label>
+				<label for="l1category" class="block text-sm font-medium text-slate-600">
+					Category L1 <span class="text-red-500">*</span>
+				</label>
 				<select
 					id="l1category"
 					bind:value={selectedL1Category}
@@ -510,7 +523,9 @@
 		<div class="flex w-full flex-col gap-4 md:flex-row">
 			<!-- Gender Selection -->
 			<div class="flex-1">
-				<span class="block text-sm font-medium text-slate-700">Gender</span>
+				<span class="block text-sm font-medium text-slate-700">
+					Gender <span class="text-red-500">*</span>
+				</span>
 				<div class="mt-2 space-x-4">
 					{#each genderOptions as gender}
 						<label class="inline-flex items-center">
@@ -530,7 +545,9 @@
 
 			<!-- City Tier Selection -->
 			<div class="flex-1">
-				<span class="block text-sm font-medium text-slate-700">Target Cities</span>
+				<span class="block text-sm font-medium text-slate-700">
+					Target Cities <span class="text-red-500">*</span>
+				</span>
 				<div class="mt-2 space-x-4">
 					{#each cityTierOptions as tier}
 						<label class="inline-flex items-center">
@@ -554,7 +571,7 @@
 			disabled={loading}
 			onclick={handleSubmit}
 		>
-			{loading ? 'Creating...' : 'Create Product'}
+			{loading ? 'Creating...' : 'Add Product'}
 		</button>
 	</div>
 </div>
