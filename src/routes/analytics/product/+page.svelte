@@ -89,14 +89,42 @@
 		return matchesSearch;
 	});
 
-	// Helper function to format affinity object - only keys
+	// Helper function to format affinity object
 	const formatAffinity = (affinity: Record<string, number>) => {
-		return Object.keys(affinity || {}).join(', ');
+		const entries = Object.entries(affinity || {});
+		return entries.map(([key, value]) => ({
+			name: key,
+			score: (value * 100).toFixed(1),
+			tooltip: `${key}: ${(value * 100).toFixed(1)}% affinity`
+		}));
 	};
 
 	// Helper function to format product info
-	const formatProduct = (prod: any) => {
-		return `${prod.prod || ''} (₹${prod.price || 'N/A'})`;
+	const formatProduct = (prod: ProductInfo) => {
+		const tooltip = `Product: ${prod.prod}\nPrice: ₹${prod.price || 'N/A'}\nBrand: ${prod.brand}\nColor: ${prod.color || 'N/A'}\nDate: ${prod.timestamp ? formatTimestamp(prod.timestamp) : 'N/A'}`;
+		return { 
+			name: prod.prod,
+			price: prod.price,
+			brand: prod.brand,
+			color: prod.color,
+			date: prod.timestamp ? formatTimestamp(prod.timestamp) : 'N/A',
+			tooltip
+		};
+	};
+
+	// Helper function to format timestamp
+	const formatTimestamp = (timestamp: number) => {
+		return new Date(timestamp).toLocaleDateString();
+	};
+
+	// Helper function to format search term
+	const formatSearchTerm = (term: SearchTerm) => {
+		return {
+			query: term.query,
+			brand: term.brand,
+			date: formatTimestamp(term.timestamp),
+			tooltip: `Query: ${term.query}\nBrand: ${term.brand}\nDate: ${formatTimestamp(term.timestamp)}`
+		};
 	};
 </script>
 
@@ -239,7 +267,7 @@
 					</thead>
 					<tbody class="bg-white divide-y divide-slate-200">
 						{#each filteredUsers as user}
-							<tr class="hover:bg-slate-50">
+							<tr class="hover:bg-slate-50/70 transition-colors">
 								<td class="px-6 py-4 whitespace-nowrap text-sm text-slate-900">{user._id}</td>
 								<td class="px-6 py-4 whitespace-nowrap text-sm text-slate-600">
 									{(user._score * 100).toFixed(2)}
@@ -251,29 +279,66 @@
 									{user._source.gender}
 								</td>
 								<td class="px-6 py-4 text-sm text-slate-600">
-									{formatAffinity(user._source.brandAffinity)}
+									<div class="max-h-32 overflow-y-auto space-y-2">
+										{#each formatAffinity(user._source.brandAffinity).slice(0, 3) as affinity}
+											<div 
+												class="p-2 rounded bg-white/80 hover:bg-blue-50/80 transition-colors shadow-sm"
+												title={affinity.tooltip}
+											>
+												<div class="font-medium">{affinity.name}</div>
+												<div class="text-xs text-slate-500">{affinity.score}%</div>
+											</div>
+										{/each}
+									</div>
 								</td>
 								<td class="px-6 py-4 text-sm text-slate-600">
-									{formatAffinity(user._source.genericAffinity)}
+									<div class="max-h-32 overflow-y-auto space-y-2">
+										{#each formatAffinity(user._source.genericAffinity).slice(0, 3) as affinity}
+											<div 
+												class="p-2 rounded bg-white/80 hover:bg-blue-50/80 transition-colors shadow-sm"
+												title={affinity.tooltip}
+											>
+												<div class="font-medium">{affinity.name}</div>
+												<div class="text-xs text-slate-500">{affinity.score}%</div>
+											</div>
+										{/each}
+									</div>
 								</td>
 								<td class="px-6 py-4 text-sm text-slate-600">
-									<div class="max-h-20 overflow-y-auto">
+									<div class="max-h-32 overflow-y-auto space-y-2">
 										{#each user.searchTerms?.slice(0, 3) || [] as term}
-											<div class="mb-1">{term.query}</div>
+											<div 
+												class="p-2 rounded bg-white/80 hover:bg-blue-50/80 transition-colors shadow-sm"
+												title={formatSearchTerm(term).tooltip}
+											>
+												<div class="font-medium">{term.query}</div>
+											</div>
 										{/each}
 									</div>
 								</td>
 								<td class="px-6 py-4 text-sm text-slate-600">
-									<div class="max-h-20 overflow-y-auto">
+									<div class="max-h-32 overflow-y-auto space-y-2">
 										{#each user.listOfProdsVisited?.slice(0, 2) || [] as prod}
-											<div class="mb-1">{formatProduct(prod)}</div>
+											<div 
+												class="p-2 rounded bg-white/80 hover:bg-blue-50/80 transition-colors shadow-sm"
+												title={formatProduct(prod).tooltip}
+											>
+												<div class="font-medium">{prod.prod}</div>
+												<div class="text-xs text-slate-500">₹{prod.price || 'N/A'}</div>
+											</div>
 										{/each}
 									</div>
 								</td>
 								<td class="px-6 py-4 text-sm text-slate-600">
-									<div class="max-h-20 overflow-y-auto">
+									<div class="max-h-32 overflow-y-auto space-y-2">
 										{#each user.listOfProdsPurchased?.slice(0, 2) || [] as prod}
-											<div class="mb-1">{formatProduct(prod)}</div>
+											<div 
+												class="p-2 rounded bg-white/80 hover:bg-blue-50/80 transition-colors shadow-sm"
+												title={formatProduct(prod).tooltip}
+											>
+												<div class="font-medium">{prod.prod}</div>
+												<div class="text-xs text-slate-500">₹{prod.price || 'N/A'}</div>
+											</div>
 										{/each}
 									</div>
 								</td>
