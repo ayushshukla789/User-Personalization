@@ -274,7 +274,7 @@
 					response: data
 				};
 				
-				goto('/dashboard/product', {
+				goto('/analytics/product', {
 					replaceState: true,
 					state: { submittedData }
 				});

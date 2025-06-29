@@ -26,7 +26,7 @@
 	const submittedData = (page.state as PageState).submittedData;
 
 	const handleBack = () => {
-		goto('/dashboard');
+		goto('/analytics');
 	};
 
 	interface ProductInfo {

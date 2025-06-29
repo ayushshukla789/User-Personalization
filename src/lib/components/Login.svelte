@@ -13,7 +13,7 @@
 	onMount(() => {
 		// Redirect to home if already authenticated
 		if ($authStore.isAuthenticated) {
-			goto('/dashboard');
+			goto('/analytics');
 		}
 	});
 
@@ -25,7 +25,7 @@
 
 		const success = await login(username, password);
 		if (success) {
-			goto('/dashboard');
+			goto('/analytics');
 		} else {
 			error = 'Invalid credentials';
 		}

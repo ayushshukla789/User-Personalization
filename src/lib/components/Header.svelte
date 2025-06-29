@@ -21,7 +21,7 @@
 				<!-- <button class="md:hidden" on:click={handleToggleSidebar} aria-label="Toggle sidebar">
 					<img src={hamburgerIcon} alt="hamburger icon" class="h-6 w-6" />
 				</button> -->
-				<a href="/dashboard" class="flex items-center"
+				<a href="/analytics" class="flex items-center"
 					><img src={logo} alt="Logo" class="h-6 w-auto sm:h-8" /></a
 				>
 			</div>
